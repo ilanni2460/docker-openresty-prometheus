@@ -113,10 +113,12 @@ ENV LUA_PATH="/usr/local/openresty/site/lualib/?.ljbc;/usr/local/openresty/site/
 ENV LUA_CPATH="/usr/local/openresty/site/lualib/?.so;/usr/local/openresty/lualib/?.so;./?.so;/usr/local/lib/lua/5.1/?.so;/usr/local/openresty/luajit/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/loadall.so;/usr/local/openresty/luajit/lib/lua/5.1/?.so"
 
 # Copy nginx configuration files
-COPY configs/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY configs/* /etc/nginx/conf.d/
 RUN mkdir /etc/prometheus
+RUN mkdir -p /var/www/prometheus
+COPY configs/nginx.conf.openrasty /usr/local/openresty/nginx/conf/nginx.conf
+COPY configs/*.conf /etc/nginx/conf.d/
 COPY scripts/prometheus.lua /etc/prometheus/prometheus.lua
+COPY scripts/prometheus.html /var/www/prometheus/prometheus.html
 
 # TODO: remove any other apt packages?
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
