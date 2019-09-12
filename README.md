@@ -5,13 +5,13 @@
 ## Docker Image tags
 |Base Image|Dockerfile|Auto Build| Status|
 |---|---|---|---|
-|Alpine|alpine/Dockerfile|Yes|Pass - Recommanded|
+|Alpine|alpine/Dockerfile|Yes|Pass|
 |Bionc|bionic/Dockerfile|Yes|Pass|
 |CentOS|centos/Dockerfile|Yes|Pass|
 |Jessie|archive/Dockerfile.jessie|Yes|Pass - Archived|
 |trusty|archive/Dockerfile.trusty|Yes|Pass - Archived|
 |Xenial|xenial/Dockerfile|Yes|Not Reviewed|
-|Stretch|stretch/Dockerfile|Not Reviewed|
+|Stretch|stretch/Dockerfile|Yes|Not Reviewed|
 
 ## Default Ports
 |Protocol|Port number|Describtion|
