@@ -154,8 +154,10 @@ RUN apk add --no-cache --virtual .build-deps \
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # Copy nginx configuration files
-COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+COPY configs/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY configs/* /etc/nginx/conf.d/
+RUN mkdir /etc/prometheus
+COPY scripts/prometheus.lua /etc/prometheus/prometheus.lua
 
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
 

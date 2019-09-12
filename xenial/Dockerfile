@@ -178,8 +178,8 @@ ENV LUA_CPATH="/usr/local/openresty/site/lualib/?.so;/usr/local/openresty/lualib
 
 
 # Copy nginx configuration files
-COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
+COPY configs/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY configs/default.conf /etc/nginx/conf.d/default.conf
 
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
 
