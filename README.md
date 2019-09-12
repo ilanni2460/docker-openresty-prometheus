@@ -1,22 +1,45 @@
 # docker-openresty - Docker tooling for OpenResty
 
-[![Travis Status](https://travis-ci.org/openresty/docker-openresty.svg?branch=master)](https://travis-ci.org/openresty/docker-openresty)  [![Appveyor status](https://ci.appveyor.com/api/projects/status/github/openresty/docker-openresty?branch=master&svg=true)](https://ci.appveyor.com/project/openresty/docker-openresty)  [![](https://images.microbadger.com/badges/image/openresty/openresty.svg)](https://microbadger.com/#/images/openresty/openresty "microbadger.com")
+![Generic badge](https://img.shields.io/badge/Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Build_Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Docker_Image-AutoBuild_on_Docker_HUB-blue.svg) ![Generic badge](https://img.shields.io/badge/Image_Size-From_101MB-blue.svg)
+
+## Docker Image tags
+|Base Image|Dockerfile|Auto Build| Status|
+|---|---|---|---|
+|Alpine|alpine/Dockerfile|Yes|Pass - Recommanded|
+|Bionc|bionic/Dockerfile|Yes|Pass|
+|CentOS|centos/Dockerfile|Yes|Pass|
+|Jessie|archive/Dockerfile.jessie|Yes|Pass - Archived|
+|trusty|archive/Dockerfile.trusty|Yes|Pass - Archived|
+|Xenial|xenial/Dockerfile|Yes|Not Reviewed|
+|Stretch|stretch/Dockerfile|Not Reviewed|
+
+## Default Ports
+|Protocol|Port number|Describtion|
+|---|---|---|
+|HTTP|80|Web Server|
+|HTTP|9100|Metrics Exporter|
+|HTTPS|443|Web Server - TLS Supported|
+
+## How to Use
+It `s simple, just need to run a new container:
+```bash
+$ docker run -idt --name <NAME> -p 80:80 -p 443:443 -p 9100:9100 mohsenmottaghi/docker-openresty-prometheus:<TAG> 
+```
+
+# OpenRasty Document
 
 ## Supported tags and respective `Dockerfile` links
 
-The following "flavors" are available and built from [upstream OpenResty packages](http://openresty.org/en/linux-packages.html):
-
-- [`centos`, `centos-rpm`, (*centos/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/centos/Dockerfile)
-- [`stretch`, (*stretch/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/stretch/Dockerfile)
-- [`stretch-fat`, (*stretch/Dockerfile.fat*)](https://github.com/openresty/docker-openresty/blob/master/stretch/Dockerfile.fat)
-- [`windows`, (*windows/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/windows/Dockerfile)
+- [`centos`, (*centos/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/tree/master/centos/Dockerfile)
+- [`trusty`, (*centos/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/blob/master/archive/Dockerfile.trusty)
+- [`jessie`, (*centos/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/blob/master/archive/Dockerfile.jessie)
 
 The following "flavors" are built from source and are intended for more advanced and custom usage, caveat emptor:
 
-- [`alpine`, (*alpine/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/alpine/Dockerfile)
-- [`alpine-fat`, (*alpine/Dockerfile.fat*)](https://github.com/openresty/docker-openresty/blob/master/alpine/Dockerfile.fat)
-- [`bionic`, (*bionic/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/bionic/Dockerfile)
-- [`xenial`, (*xenial/Dockerfile*)](https://github.com/openresty/docker-openresty/blob/master/xenial/Dockerfile)
+- [`alpine`, (*alpine/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/tree/master/alpine/Dockerfile)
+- [`bionic`, (*bionic/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/tree/master/bionic/Dockerfile)
+- [`xenial`, (*xenial/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/tree/master/xenial/Dockerfile)
+- [`stretch`, (*stretch/Dockerfile*)](https://github.com/mohsenmottaghi/docker-openresty-prometheus/tree/master/stretch/Dockerfile)
 
 Starting with `1.13.6.1`, releases are tagged with `<openresty-version>-<image-version>-<flavor>`.  The latest `image-version` will also be tagged `<openresty-version>-<flavor>`.   The HEAD of the master branch is also labeled plainly as `<flavor>`.  The builds are managed by [Travis-CI](https://travis-ci.org/openresty/docker-openresty) and [Appveyor](https://ci.appveyor.com/project/openresty/docker-openresty) (for Windows images).
 

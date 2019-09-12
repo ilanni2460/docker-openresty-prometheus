@@ -178,8 +178,12 @@ ENV LUA_CPATH="/usr/local/openresty/site/lualib/?.so;/usr/local/openresty/lualib
 
 
 # Copy nginx configuration files
-COPY configs/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY configs/default.conf /etc/nginx/conf.d/default.conf
+RUN mkdir /etc/prometheus
+RUN mkdir -p /var/www/prometheus
+COPY configs/nginx.conf.openrasty /usr/local/openresty/nginx/conf/nginx.conf
+COPY configs/*.conf /etc/nginx/conf.d/
+COPY scripts/prometheus.lua /etc/prometheus/prometheus.lua
+COPY scripts/prometheus.html /var/www/prometheus/prometheus.html
 
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
 
