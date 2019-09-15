@@ -17,7 +17,7 @@ jobs:
           echo -e "----------------------------\n\nThe Latest Version of OpenRasty is $LATEST\n\n----------------------------"
       - name: Build Docker image alpine
         run: |
-          docker build -f docker-openresty-prometheus/alpine/Dockerfile -t openrasty:alpine-test
+          docker build -f docker-openresty-prometheus/alpine/Dockerfile -t openrasty:alpine-test .
       - name: Test Docker image
         run: |
           docker run --rm openrasty:alpine-test nginx -t
