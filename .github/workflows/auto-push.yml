@@ -1,0 +1,26 @@
+name: AUTO TEST
+
+#on:
+#  schedule:
+#  - cron: "0 0 * * *"
+on:
+  push:
+
+jobs:
+  check:
+    name: check version
+    runs-on: ubuntu-latest
+    steps:
+      - name: get latest version
+        run: |
+          LATEST=$(curl https://github.com/openresty/openresty/releases/latest | cut -d '"' -f 2 | cut -d '/' -f 8)
+          CURRENT=$(cat VERSION)
+          VERSION=$(bash check-version.sh $LATEST $CURRENT)
+      - name: change files
+        run: |
+          sed -i "s/$CURRENT/$VERSION/" VERSION
+      - name: git commit
+        run: |
+          git add -A
+          git commit -m 'AUTO UPDATE'
+          git push origin master
