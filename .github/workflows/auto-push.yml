@@ -11,10 +11,15 @@ jobs:
     name: check version
     runs-on: ubuntu-latest
     steps:
+      - name: clone repo
+        run: |
+          git clone https://github.com/mohsenmottaghi/docker-openresty-prometheus.git
+          cd docker-openresty-prometheus
+          pwd
       - name: get latest version
         run: |
+          pwd
           LATEST=$(curl https://github.com/openresty/openresty/releases/latest | cut -d '"' -f 2 | cut -d '/' -f 8)
-          ls -lh
           CURRENT=$(cat VERSION)
           VERSION=$(bash check-version.sh $LATEST $CURRENT)
       - name: change files
