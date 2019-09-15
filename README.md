@@ -2,9 +2,6 @@
 
 ![Generic badge](https://img.shields.io/badge/Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Build_Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Docker_Image-AutoBuild_on_Docker_HUB-blue.svg) ![Generic badge](https://img.shields.io/badge/Image_Size-From_101MB-blue.svg)
 
-# DOCKER IMAGE STATUS
-![GE](https://github.com/mohsenmottaghi/docker-openrasty-prometheus/workflows/Check%20Alpine%20image/badge.svg)
-
 ## Docker Image tags
 |Base Image|Dockerfile|Auto Build| Status|
 |---|---|---|---|
@@ -28,6 +25,9 @@ It `s simple, just need to run a new container:
 ```bash
 $ docker run -idt --name <NAME> -p 80:80 -p 443:443 -p 9100:9100 mohsenmottaghi/docker-openresty-prometheus:<TAG> 
 ```
+
+# NGINX Exporter
+we use `prometheus.lua` script as nginx exporter. for use this script we have `prometheus.conf` file in `nginx/conf.d` directory that will set the lua script values and for location on serving metrics we use `metrics.conf` file and serve `/metrics` by default.
 
 # OpenRasty Document
 
