@@ -2,6 +2,9 @@
 
 ![Generic badge](https://img.shields.io/badge/Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Build_Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Docker_Image-AutoBuild_on_Docker_HUB-blue.svg) ![Generic badge](https://img.shields.io/badge/Image_Size-From_101MB-blue.svg)
 
+# DOCKER IMAGE STATUS
+![GE](https://github.com/mohsenmottaghi/docker-openrasty-prometheus/workflows/Check%20Alpine%20image/badge.svg)
+
 ## Docker Image tags
 |Base Image|Dockerfile|Auto Build| Status|
 |---|---|---|---|

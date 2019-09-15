@@ -1,4 +1,4 @@
-name: Check Alpine image
+name: Alpine
 
 on:
   push:
