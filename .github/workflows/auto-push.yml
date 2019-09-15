@@ -14,8 +14,8 @@ jobs:
       - name: get latest version
         run: |
           LATEST=$(curl https://github.com/openresty/openresty/releases/latest | cut -d '"' -f 2 | cut -d '/' -f 8)
-          CURRENT=$(cat VERSION)
           ls -lh
+          CURRENT=$(cat VERSION)
           VERSION=$(bash check-version.sh $LATEST $CURRENT)
       - name: change files
         run: |
