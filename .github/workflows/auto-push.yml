@@ -18,16 +18,18 @@ jobs:
       - name: get latest version
         run: |
           cd docker-openresty-prometheus
-          pwd
-          ls -lh
           LATEST=$(curl https://github.com/openresty/openresty/releases/latest | cut -d '"' -f 2 | cut -d '/' -f 8)
           CURRENT=$(cat VERSION)
           VERSION=$(bash check-version.sh $LATEST $CURRENT)
       - name: change files
         run: |
+          cd docker-openresty-prometheus
+          cat VERSION
           sed -i "s/$CURRENT/$VERSION/" VERSION
+          cat VERSION
       - name: git commit
         run: |
+          cd docker-openresty-prometheus
           git add -A
           git commit -m 'AUTO UPDATE'
           git push origin master
