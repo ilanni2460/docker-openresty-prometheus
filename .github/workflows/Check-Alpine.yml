@@ -1,8 +1,5 @@
 name: Check Alpine image
 
-#on:
-#  schedule:
-#  - cron: "0 0 * * *"
 on:
   push:
 
@@ -18,7 +15,7 @@ jobs:
         run: |
           LATEST=$(curl https://github.com/openresty/openresty/releases/latest | cut -d '"' -f 2 | cut -d '/' -f 8)
           echo -e "----------------------------\n\nThe Latest Version of OpenRasty is $LATEST\n\n----------------------------"
-      - name: Build Docker image alpine
-          docker build -f docker-openresty-prometheus/alpine/Dockerfile -t openrasty:alpine-test
-      - name: Test Docker image
-          docker run --rm openrasty:alpine-test nginx -t
+      # - name: Build Docker image alpine
+      #     docker build -f docker-openresty-prometheus/alpine/Dockerfile -t openrasty:alpine-test
+      # - name: Test Docker image
+      #     docker run --rm openrasty:alpine-test nginx -t
