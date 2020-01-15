@@ -1,8 +1,8 @@
-# Dockerfile - Debian 9 Stretch - DEB version
+# Dockerfile - Debian 10 Buster - DEB version
 # https://github.com/openresty/docker-openresty
 
 ARG RESTY_IMAGE_BASE="debian"
-ARG RESTY_IMAGE_TAG="stretch-slim"
+ARG RESTY_IMAGE_TAG="buster-slim"
 
 FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 
@@ -12,9 +12,9 @@ LABEL maintainer="Evan Wies <evan@neomantra.net>"
 # OpenResty Debian package variants.
 # For example: "-debug" or "-valgrind"
 ARG RESTY_DEB_FLAVOR=""
-ARG RESTY_DEB_VERSION="=1.15.8.2-1~stretch1"
+ARG RESTY_DEB_VERSION="=1.15.8.2-1~buster1"
 ARG RESTY_IMAGE_BASE="debian"
-ARG RESTY_IMAGE_TAG="stretch-slim"
+ARG RESTY_IMAGE_TAG="buster-slim"
 
 LABEL resty_image_base="${RESTY_IMAGE_BASE}"
 LABEL resty_image_tag="${RESTY_IMAGE_TAG}"
@@ -52,12 +52,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 ENV PATH="$PATH:/usr/local/openresty${RESTY_DEB_FLAVOR}/luajit/bin:/usr/local/openresty${RESTY_DEB_FLAVOR}/nginx/sbin:/usr/local/openresty${RESTY_DEB_FLAVOR}/bin"
 
 # Copy nginx configuration files
-RUN mkdir /etc/prometheus
-RUN mkdir -p /var/www/prometheus
-COPY configs/nginx.conf.openrasty /usr/local/openresty${RESTY_DEB_FLAVOR}/nginx/conf/nginx.conf
-COPY configs/*.conf /etc/nginx/conf.d/
-COPY scripts/prometheus.lua /etc/prometheus/prometheus.lua
-COPY scripts/prometheus.html /var/www/prometheus/prometheus.html
+COPY nginx.conf /usr/local/openresty${RESTY_DEB_FLAVOR}/nginx/conf/nginx.conf
+COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
 CMD ["/usr/bin/openresty", "-g", "daemon off;"]
 

@@ -88,12 +88,14 @@ Usage
 If you are happy with the build defaults, then you can use the openresty image from the [Docker Hub](https://hub.docker.com/r/openresty/openresty/).  The image tags available there are listed at the top of this README.
 
 ```
-docker run [options] openresty/openresty:stretch-fat
+docker run [options] openresty/openresty:buster-fat
 ```
 
 *[options]* would be things like -p to map ports, -v to map volumes, and -d to daemonize.
 
 `docker-openresty` symlinks `/usr/local/openresty/nginx/logs/access.log` and `error.log` to `/dev/stdout` and `/dev/stderr` respectively, so that Docker logging works correctly.  If you change the log paths in your `nginx.conf`, you should symlink those paths as well. This is not possible with the `windows` image.
+
+Temporary directories such as `client_body_temp_path` are stored in `/var/run/openresty/`.  You may consider mounting that volume, rather than writing to a container-local directory.  This is not done for `windows`.
 
 
 Nginx Config Files
@@ -101,12 +103,17 @@ Nginx Config Files
 
 The Docker tooling installs its own [`nginx.conf` file](https://github.com/openresty/docker-openresty/blob/master/nginx.conf).  If you want to directly override it, you can replace it in your own Dockerfile or via volume bind-mounting.
 
-For the Linux images, that `nginx.conf` has the directive `include /etc/nginx/conf.d/*.conf;` so all nginx configurations in that directory will be included.  The [default virtual host configuration](https://github.com/openresty/docker-openresty/blob/master/nginx.vh.default.conf) has the original OpenResty configuration and is copied to `/etc/nginx/conf.d/default.conf`. 
+For the Linux images, that `nginx.conf` has the directive `include /etc/nginx/conf.d/*.conf;` so all nginx configurations in that directory will be included.  The [default virtual host configuration](https://github.com/openresty/docker-openresty/blob/master/nginx.vh.default.conf) has the original OpenResty configuration and is copied to `/etc/nginx/conf.d/default.conf`.
 
 You can override that `default.conf` directly or volume bind-mount the `/etc/nginx/conf.d` directory to your own set of configurations:
 
 ```
 docker run -v /my/custom/conf.d:/etc/nginx/conf.d openresty/openresty:alpine
+```
+
+If you are running on an `selinux` host (e.g. CentOS), you may need to add `:Z` to your [volume bind-mount argument](https://docs.docker.com/storage/bind-mounts/#configure-the-selinux-label):
+```
+docker run -v /my/custom/conf.d:/etc/nginx/conf.d:Z openresty/openresty:alpine
 ```
 
 When using the `windows` image you can change the main configuration directly:
@@ -120,11 +127,11 @@ OPM
 
 Starting at version 1.11.2.2, OpenResty for Linux includes a [package manager called `opm`](https://github.com/openresty/opm#readme), which can be found at `/usr/local/openresty/bin/opm`.
 
-`opm` is built in all the images except `alpine` and `stretch`.
+`opm` is built in all the images except `alpine`, `stretch` and `buster`.
 
 To use `opm` in the `alpine` image, you must also install the `curl` and `perl` packages; they are not included by default because they double the image size.  You may install them like so: `apk add --no-cache curl perl`.
 
-To use `opm` within the `stretch` image, you can either use the `stretch-fat` image or install the `openresty-opm` package in a custom build (which you would need to do to install your own `opm` packages anyway), as shown in [this example](https://github.com/openresty/docker-openresty/blob/master/stretch/Dockerfile.opm_example).
+To use `opm` within the `stretch` and `buster` image, you can either use the `stretch-fat`/`buster-fat` image or install the `openresty-opm` package in a custom build (which you would need to do to install your own `opm` packages anyway), as shown in [this example](https://github.com/openresty/docker-openresty/blob/master/stretch/Dockerfile.opm_example).
 
 
 LuaRocks
@@ -208,9 +215,11 @@ $ docker inspect openresty/openresty:1.15.8.1-1-alpine | jq '.[].Config.Labels'
 |`resty_openssl_version`       | buildarg `RESTY_OPENSSL_VERSION`  |
 |`resty_pcre_version`          | buildarg `RESTY_PCRE_VERSION`  |
 |`resty_rpm_arch`              | buildarg `RESTY_RPM_ARCH`  |
+|`resty_rpm_dist`              | buildarg `RESTY_RPM_DIST`  |
 |`resty_rpm_flavor`            | buildarg `RESTY_RPM_FLAVOR`  |
 |`resty_rpm_version`           | buildarg `RESTY_RPM_VERSION`  |
 |`resty_version`               | buildarg `RESTY_VERSION`  |
+|`resty_yum_repo`              | buildarg `RESTY_YUM_REPO`  |
 
 
 Docker CMD
@@ -262,7 +271,7 @@ docker build --build-arg RESTY_J=4 -f xenial/Dockerfile .
 |RESTY_IMAGE_BASE | "ubuntu" / "alpine" | The Debian or Alpine Docker image base to build `FROM`. |
 |RESTY_IMAGE_TAG  | { "xenial", "bionic" } / "3.9" | The Debian or Alpine Docker image tag to build `FROM`. |
 |RESTY_VERSION | 1.15.8.2 | The version of OpenResty to use. |
-|RESTY_LUAROCKS_VERSION | 3.1.3 | The version of LuaRocks to use. |
+|RESTY_LUAROCKS_VERSION | 3.2.1 | The version of LuaRocks to use. |
 |RESTY_OPENSSL_VERSION | 1.1.0k  / 1.1.1c | The version of OpenSSL to use. |
 |RESTY_PCRE_VERSION | 8.43 | The version of PCRE to use. |
 |RESTY_J | 1 | Sets the parallelism level (-jN) for the builds. |
@@ -326,10 +335,12 @@ docker build --build-arg RESTY_RPM_FLAVOR="-debug" centos
 :----- | :-----: |:----------- |
 |RESTY_IMAGE_BASE | "centos" | The Centos Docker image base to build `FROM`. |
 |RESTY_IMAGE_TAG | "7" | The CentOS Docker image tag to build `FROM`. |
-|RESTY_LUAROCKS_VERSION | 3.1.2 | The version of LuaRocks to use. |
+|RESTY_LUAROCKS_VERSION | 3.2.1 | The version of LuaRocks to use. |
+|RESTY_YUM_REPO | "https://openresty.org/package/centos/openresty.repo" | URL for the OpenResty YUM Repository. |
 |RESTY_RPM_FLAVOR | "" | The `openresty` package flavor to use.  Possibly `"-debug"` or `"-valgrind"`. |
-|RESTY_RPM_VERSION | 1.15.8.1-1.el7 | The `openresty` package version to install. |
-|RESTY_RPM_ARCH | x86_64 | The `openresty` package architecture to install. |
+|RESTY_RPM_VERSION | "1.15.8.2-2" | The `openresty` package version to install. |
+|RESTY_RPM_DIST | "el7" | The `openresty` package distribution to install. |
+|RESTY_RPM_ARCH | "x86_64" | The `openresty` package architecture to install. |
 
 [Back to TOC](#table-of-contents)
 
@@ -344,6 +355,7 @@ You can derive your own Docker images from this to install your own packages.  S
 This Docker image can be built and customized by cloning the repo and running `docker build` with the desired Dockerfile:
 
  * [Debian Stretch 9 DEB](https://github.com/openresty/docker-openresty/blob/master/stretch/Dockerfile) (`stretch/Dockerfile`)
+ * [Debian Buster 10 DEB](https://github.com/openresty/docker-openresty/blob/master/buster/Dockerfile) (`buster/Dockerfile`)
 
 The following are the available build-time options. They can be set using the `--build-arg` CLI argument, like so:
 
@@ -356,7 +368,7 @@ docker build --build-arg RESTY_DEB_FLAVOR="-debug" -f stretch/Dockerfile .
 |RESTY_IMAGE_BASE  | "debian" | The Debian Docker image base to build `FROM`. |
 |RESTY_IMAGE_TAG   | "stretch-slim" | The Debian Docker image tag to build `FROM`. |
 |RESTY_DEB_FLAVOR  | "" | The `openresty` package flavor to use.  Possibly `"-debug"` or `"-valgrind"`. |
-|RESTY_DEB_VERSION | "=1.15.8.1-1~stretch1" | The Debian package version to use, with `=` prepended. |
+|RESTY_DEB_VERSION | "=1.15.8.2-1~stretch1" | The Debian package version to use, with `=` prepended. |
 
 [Back to TOC](#table-of-contents)
 
@@ -380,7 +392,7 @@ docker build --build-arg RESTY_VERSION="1.13.6.2" -f windows/Dockerfile .
 |RESTY_INSTALL_TAG  | "ltsc2016" | The Windows Server Docker image name to download and install OpenResty with. |
 |RESTY_IMAGE_BASE   | "microsoft/nanoserver" | The Windows Server Docker image name to build `FROM` for final image. |
 |RESTY_IMAGE_TAG    | "sac2016" | The Windows Server Docker image tag to build `FROM` for final image. |
-|RESTY_VERSION      | 1.15.8.1 | The version of OpenResty to use. |
+|RESTY_VERSION      | 1.15.8.2 | The version of OpenResty to use. |
 
 [Back to TOC](#table-of-contents)
 

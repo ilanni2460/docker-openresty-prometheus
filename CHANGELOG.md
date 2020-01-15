@@ -1,11 +1,36 @@
 Changelog
 =========
 
-## 1.15.8.2-1 (untagged)
+## 1.15.8.2-6
 
- * Patch and build OpenSSL in built-from-source flavors (#117, #118)
+ * Add `RESTY_YUM_REPO` and `RESTY_RPM_DIST` build args to `centos` 
+ * Install more yum packages for `centos` builds
+ * Add `amzn2` flavor, based on `centos`
 
-## 1.15.8.2-0 (untagged)
+## 1.15.8.2-5
+
+ * Remove `VOLUME` directive and just `mkdir /var/run/openresty` (#128)
+
+## 1.15.8.2-4
+
+ * Add `buster` and `buster-fat` using upstream Debian packages
+
+## 1.15.8.2-3
+
+ * Fix broken `alpine` logging
+ * Add `VOLUME` for temporary paths (#124) (but not for `windows`)
+
+## 1.15.8.2-2 (broken, do not use)
+
+ * Upgrade built-from-upstream packages (`stretch`, `centos`, `windows`) to 1.15.8.2
+ * Upgrade LuaRocks to 3.2.1 (#122)
+ * Move default writable temp paths to dedicated directories `/var/run/openresty` (#119)
+
+## 1.15.8.2-1 (untagged in git)
+
+ * Patch and build OpenSSL ourselves in built-from-source flavors (#117, #118)
+
+## 1.15.8.2-0 (untagged in git)
 
 For now (untagged release), the following only applies to built-from-source flavors (alpine/bionic/xenial). We are waiting for OpenResty upstream to release their packages for CentOS and Debian.
 
