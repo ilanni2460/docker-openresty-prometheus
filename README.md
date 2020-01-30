@@ -2,6 +2,9 @@
 
 ![Generic badge](https://img.shields.io/badge/Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Build_Dockerfile-Pass-<COLOR>.svg) ![Generic badge](https://img.shields.io/badge/Docker_Image-AutoBuild_on_Docker_HUB-blue.svg) ![Generic badge](https://img.shields.io/badge/Image_Size-From_101MB-blue.svg)
 
+## GitHub CI status
+![Bionic Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/Bionic%20Docker%20Image%20CI/badge.svg) ![Alpine Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/Alpine%20Docker%20Image%20CI/badge.svg) ![Xenial Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/Xenial%20Docker%20Image%20CI/badge.svg) ![Stretch Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/Stretch%20Docker%20Image%20CI/badge.svg) ![CentOS Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/CentOS%20Docker%20Image%20CI/badge.svg) ![Buster Docker Image CI](https://github.com/mohsenmottaghi/docker-openresty-prometheus/workflows/Buster%20Docker%20Image%20CI/badge.svg)
+
 ## Docker Image tags
 |Base Image|Dockerfile|Auto Build| Status|
 |---|---|---|---|
