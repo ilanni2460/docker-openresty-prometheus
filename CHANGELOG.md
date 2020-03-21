@@ -1,6 +1,15 @@
 Changelog
 =========
 
+## 1.15.8.3-0
+
+* Upgrade OpenResty to 1.15.8.3
+ 
+## 1.15.8.2-7
+
+ * Add `buster-nosse2` and `buster-fat-nosse2` (#103)
+ * Bump `alpine` to 3.11 to address CVE-2019-18276 (#135)
+
 ## 1.15.8.2-6
 
  * Add `RESTY_YUM_REPO` and `RESTY_RPM_DIST` build args to `centos` 
