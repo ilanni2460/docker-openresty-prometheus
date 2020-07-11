@@ -15,7 +15,7 @@ jobs:
       run: docker version
 
     - name: Build Docker image
-      run: docker build . --file alpine/Dockerfile --tag docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-bionic:latest
+      run: docker build . --file bionic/Dockerfile --tag docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-bionic:latest
 
     - name: Push Docker image
       run: |

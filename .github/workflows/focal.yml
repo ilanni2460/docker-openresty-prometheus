@@ -1,4 +1,4 @@
-name: Alpine Docker Image CI
+name: Focal Docker Image CI
 
 on: [push]
 
@@ -15,10 +15,10 @@ jobs:
       run: docker version
 
     - name: Build Docker image
-      run: docker build . --file alpine/Dockerfile --tag docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-alpine:latest
+      run: docker build . --file focal/Dockerfile --tag docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-focal:latest
 
     - name: Push Docker image
       run: |
         docker login docker.pkg.github.com --username mohsenmottaghi -p ${{ secrets.GITHUB_PACKAGES }}
-        docker push docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-alpine:latest
+        docker push docker.pkg.github.com/mohsenmottaghi/docker-openresty-prometheus/openresty-focal:latest
 
